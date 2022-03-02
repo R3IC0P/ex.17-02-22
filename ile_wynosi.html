@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ile wynosi?</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #434343;
+      color: white;
+      font-size: 3rem;
+    }
+
+    .container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .info {
+      color: #878787;
+      font-size: 1.2rem;
+      margin-bottom: 5rem;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    #userInput {
+      font-size: 2rem;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="info">
+      <span>Działanie generowane automatycznie z zakresu <b>0</b> do <b>50</b></span>
+      <span>Czas do startu oraz do kolejnej rundy po odganięciu wynosi 1,5s</span>
+    </div>
+    <p id="question">Zgadnij ile wynosi...?</p>
+    <input type="number" id="userInput">
+    <div id="res"></div>
+  </div>
+
+  <script>
+    const userInput = document.querySelector('#userInput')
+    const res = document.querySelector('#res')
+    const question = document.querySelector('#question')
+    let win = false
+    let reply
+
+    setTimeout(start, 1500)
+
+    function start() {
+      userInput.value = ''
+      res.innerHTML = ''
+      win = false
+
+      const randOperator = Math.floor(Math.random()*3)
+      const number1 = Math.floor(Math.random()*50)
+      const number2 = Math.floor(Math.random()*50)
+      question.innerHTML = 'Ile wynosi '
+
+      switch (randOperator) {
+        case 0:
+          question.innerHTML += `${number1} + ${number2}`
+          reply = number1 + number2
+          break;
+        case 1:
+          question.innerHTML += `${number1} - ${number2}`
+          reply = number1 - number2
+          break;
+        case 2:
+          question.innerHTML += `${number1} * ${number2}`
+          reply = number1 * number2
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    document.addEventListener('input', () => {
+      if (+userInput.value == reply) {
+        win = true
+        res.style.color = 'lightgreen'
+        res.innerHTML = 'Poprawna odpowiedź!'
+      }
+      else {
+        win = false
+        res.style.color = 'tomato'
+        res.innerHTML = 'Błędna odpowiedź'
+      }
+
+      if (win) {
+        setTimeout(start, 1500)
+      }
+    })
+  </script>
+</body>
+</html>
